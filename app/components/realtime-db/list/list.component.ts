@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 // Services
 import { RealtimeDbService } from "../realtime-db.service";
 
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -22,12 +23,13 @@ export class ListComponent implements OnInit {
   items: Observable<any[]>;
   editItemForm: FormGroup;
   isEditVisible = false;
+  man: any = '';
 
   constructor(
     private afDb: AngularFireDatabase,
     private fb: FormBuilder,
-    private rds: RealtimeDbService
-  ) {
+    private rds: RealtimeDbService)
+  {
     this.itemsRef = this.afDb.list('users');
     // Use snapshotChanges().map() to store the key and rerun when chnages are detected
     this.items = this.itemsRef.snapshotChanges().map(changes => {
@@ -44,53 +46,51 @@ export class ListComponent implements OnInit {
         size: ['', Validators.required],
         details: ['', Validators.required],
         link: ['', Validators.required],
-        image: ['', Validators.required]
+        image: ['', Validators.required],
+        role: [''],
+        name: ['']
       }
     )
   }
 
   ngOnInit() {
+      
   }
 
-  goToLink(link) {
-    console.log(link);
-    // window.location.href = link;
-    window.open(link, '_blank'); // opens in a new tab
-  }
 
   toggleEditItemForm() {
-    this.isEditVisible = !this.isEditVisible;
+      this.isEditVisible = !this.isEditVisible;
   }
 
-  pushItemToList(title: string, size: string, details: string, url: string, image: string) {
-    this.itemsRef.push(
-      {
-        title: title,
-        size: size,
-        text: details,
-        link: url,
-        poster: image
-      }
-    )
-      .then(_ => console.log('New Item Added Successfully'))
-    // .catch(err => console.log(err, 'You do not have access to Push!'));
+  pushItemToList(role: string) {
+      this.itemsRef.push(
+          {
+              role: role
+          }
+      )
+      .then(_ => console.log('New Item Added Successfully') )
+   //  .catch(err => console.log(err, 'You do not have access to Push!'));
   }
 
-  setSingleItem(itemKey: string, title: string, size: string, details: string, url: string, image: string) {
-    this.itemsRef.set(itemKey,
-      {
-        title: title,
-        size: size,
-        text: details,
-        link: url,
-        poster: image
-      })
-      .then(_ => console.log('Single Item Set Successfully'))
-      .catch(err => console.log(err, 'You do not have access to Set!'));
-  }
+  //setSingleItem(role: string) {
+  //  this.itemsRef.set(this.key,
+  //    {
+  //      role: role
+  //    })
+  //    .then(_ => console.log('Single Item Set Successfully'))
+  //    .catch(err => console.log(err, 'You do not have access to Set!'));
+  //}
 
-  updateSingleItem() {
+  updateSingleItem(role: string, name: string) {
+      this.itemsRef.update(this.man.key,
+          {
+              role: role,
+              name: name
+          })
+          .then(_ => console.log('Single Item Updated Successfully') )
+          .catch(err => console.log(err, 'You do not have access!'));
 
+      this.toggleEditItemForm();
   }
 
   removeSingleItemFromList(itemKey: string) {

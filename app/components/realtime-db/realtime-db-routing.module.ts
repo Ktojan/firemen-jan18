@@ -14,12 +14,12 @@ import { DynamicQueryingComponent } from './dynamic-querying/dynamic-querying.co
 const realtimeDBRoutes = [
   {
     path: '', component: RealtimeDbComponent, children: [
-      { path: '', component: HomeComponent },
+        { path: '', component: AuthComponent },
       { path: 'auth', component: AuthComponent },
       { path: 'list', component: ListComponent },
-      { path: 'single', component: SingleComponent },
-      { path: 'querying-lists', component: QueryingListsComponent },
-      { path: 'dynamic-querying', component: DynamicQueryingComponent }
+      //{ path: 'single', component: SingleComponent },
+      //{ path: 'querying-lists', component: QueryingListsComponent },
+      //{ path: 'dynamic-querying', component: DynamicQueryingComponent }
     ]
   }
 ]

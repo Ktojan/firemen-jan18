@@ -1,6 +1,3 @@
-body {
-  background-image: url('https://lh3.googleusercontent.com/e4-uae8fa0UxweRGgokdHtUKan8sURMmJ4A_6dABhxXSVCGs35FyxB9ZYMzfTvZGTA=h900');
-}
 
 :host {
     display: flex;
@@ -12,6 +9,9 @@ body {
 }
 
 #main-content {
-    flex: 4;
-    padding: 0 2rem;
+  background-image:
+    url('https://lh3.googleusercontent.com/e4-uae8fa0UxweRGgokdHtUKan8sURMmJ4A_6dABhxXSVCGs35FyxB9ZYMzfTvZGTA=h900');
+  flex: 4;
+  padding: 0 1rem;
 }
+

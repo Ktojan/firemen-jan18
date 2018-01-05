@@ -1,4 +1,4 @@
-<h2>Managing Firemen with levels of access. </h2>
+<h2 style="color: orange">Managing Firemen with levels of access.  </h2>
 <!-- <h3>AngularFireDatabase with valueChanges() method</h3>
 <p>
   <strong>valueChanges()</strong> returns an Observable of data as a synchronized array of the JSON object. (async pipe uses with
@@ -15,12 +15,13 @@
     <li *ngFor="let item of items | async" class="item-box">
       <h3>
         {{ item.name }}
-        &nbsp;&nbsp;&nbsp;<span>{{ item.email }}</span>
+      </h3>
+      &nbsp;&nbsp;&nbsp;<span>Role is {{ item.role }}.</span>
         &nbsp;<span>UID: {{item.key}}</span>
-        <span>
-          <a (click)="toggleEditItemForm()">EDIT INFO</a>
+        <span *ngIf="item.role === 'Admin'">
+          <a (click)="man = item; toggleEditItemForm()">EDIT PROFILE</a>
         </span>
-      </h3>       
+           
       <div class="remove" (click)="removeSingleItemFromList(item.key)">X</div>
     </li>
   </ul>
@@ -38,14 +39,25 @@
 
 <div class="edit-form" *ngIf="isEditVisible">
   <form [formGroup]="editItemForm">
-    <input type="text" placeholder="Title" formControlName="title" #setTitle>
-    <input type="text" placeholder="Size" formControlName="size" #setSize>
-    <input type="text" placeholder="Details" value="selectedItem.link" formControlName="details" #setDetails>
-    <input type="text" placeholder="Link" value="selectedItem.link" formControlName="link" #setLink>
-    <input type="text" placeholder="Image" value="selectedItem.poster" formControlName="image" #setImage>
-    <button (click)="setSingleItem(setTitle.value, setSize.value, setDetails.value, setLink.value, setImage.value)">SET</button>
-    <button (click)="updateSingleItem()">UPDATE</button>
-    <div class="remove" (click)="toggleEditItemForm()">X</div>
+
+    <div class="form-group">
+      <label for="name">Change name:</label>
+      <input type="text" id="name" formControlName="name" value="{{man.name}}" #setName />
+      <br /><br />
+
+      <label for="sel1">Define role:</label>
+      <select class="form-control" id="sel1" formControlName="role" #setRole>
+        <option selected>Admin</option>
+        <option>User</option>
+        <option>No role</option>
+      </select>
+    </div>
+   
+
+
+    <!--<button (click)="setSingleItem(setRole.value)">SET</button>-->
+    <button class='btn btn-danger' (click)="updateSingleItem(setRole.value, setName.value)">UPDATE THIS FIREMAN</button>
+    <button class='btn btn-default'(click)="toggleEditItemForm()">Close</button>
   </form>
 </div>
 

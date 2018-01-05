@@ -42,12 +42,13 @@ export class AuthComponent implements OnInit {
         // Initialize User Details 
         let name = res.displayName;
         let email = res.email;
-        let img = res.photoURL;
+        //let img = res.photoURL;
         let id = res.uid;
-        let provider = this.activeLoginProvider
+        let role = res.role || 'Admin';
+        let provider = this.activeLoginProvider;
         this.users = this.afDb.list('/users');
         // Call Push Function With User Details
-        this.pushUserToDb(name, email, img, id, provider);
+        this.pushUserToDb(name, email, id, provider, role);
         this.changeUserStatus(id);
       } else {
         console.log('State: NOT logged in');
@@ -124,14 +125,14 @@ export class AuthComponent implements OnInit {
   }
 
   // Push User Details to Databse
-  pushUserToDb(name: string, email: string, img: string, id: string, provider: string) {
+  pushUserToDb(name: string, email: string, id: string, provider: string, role: string) {
     this.as.currentUserId = id;
     this.users.update(id, {
       name: name || 'Anonymous',
       email: email,
-      picture: img || 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png',
+      //picture: img || 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png',
       uid: id,
-      loginProvider: provider
+      role: role || 'Admin'
     })
       .then(() => console.log('Successfully Added User To Database'))
       .catch(err => console.log(err, 'You do not have access!'));
